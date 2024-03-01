@@ -15,8 +15,8 @@ jobs:
 
       - name: Push to Azure DevOps
         env:
-          AZURE_REPO_URL: https://credentially-uk.visualstudio.com/PowerBI/_git/pbi-cicd-test
+          AZURE_REPO_URL: Credentially-UK@vs-ssh.visualstudio.com:v3/Credentially-UK/PowerBI/pbi-cicd-test
           AZURE_PAT: ${{ secrets.AZURE_PAT }}
         run: |
-          git remote add azure https://IgorPlotnikov-0057@credentially-uk.visualstudio.com/PowerBI/_git/pbi-cicd-test
-          git push azure HEAD:refs/heads/develop
+          git remote add azure $AZURE_REPO_URL
+          git push azure HEAD:refs/heads/main
