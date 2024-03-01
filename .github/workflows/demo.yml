@@ -1,0 +1,22 @@
+name: Sync to Azure DevOps
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Push to Azure DevOps
+        env:
+          AZURE_REPO_URL: https://credentially-uk.visualstudio.com/PowerBI/_git/pbi-cicd-test
+          AZURE_PAT: ${{ secrets.AZURE_PAT }}
+        run: |
+          git remote add azure $AZURE_REPO_URL
+          git push azure HEAD:refs/heads/develop
