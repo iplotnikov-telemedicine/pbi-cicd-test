@@ -51,9 +51,9 @@ status_response=$(curl -s -X GET \
 workspaceHead=$(echo "$status_response" | grep -o '"workspaceHead":"[^"]*' | sed 's/"workspaceHead":"//')
 remoteCommitHash=$(echo "$status_response" | grep -o '"remoteCommitHash":"[^"]*' | sed 's/"remoteCommitHash":"//')
 
-echo "$workspaceHead"
-echo "$remoteCommitHash"
-echo "$access_token"
+echo "<$workspaceHead>"
+echo "<$remoteCommitHash>"
+echo "<$access_token>"
 
 
 # Update the workspace from git
