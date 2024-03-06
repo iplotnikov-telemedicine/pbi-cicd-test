@@ -55,7 +55,17 @@ remoteCommitHash=$(echo "$status_response" | grep -o '"remoteCommitHash":"[^"]*'
 update_response=$(curl -X POST \
   -H "Authorization: Bearer $access_token" \
   -H "Content-Type: application/json" \
-  -d '{"remoteCommitHash": "'"$remoteCommitHash"'", "workspaceHead": "'"$workspaceHead"'"}' \
+  -d '{
+        "workspaceHead": "'"$workspaceHead"'",
+        "remoteCommitHash": "'"$remoteCommitHash"'",
+        "conflictResolution": {
+          "conflictResolutionType": "Workspace",
+          "conflictResolutionPolicy": "PreferWorkspace"
+        },
+        "options": {
+          "allowOverrideItems": true
+        }
+      }' \
   https://api.fabric.microsoft.com/v1/workspaces/99693b73-c010-4b60-b5bf-11c970b05b09/git/updateFromGit)
 
 if [ "$update_response" = "null" ]; then
