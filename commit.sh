@@ -24,3 +24,22 @@ git config --global user.name "$AZUSERNAME"
 git add .
 git commit -m "Sync from GitHub to Azure DevOps"
 git push --force $AZREPO
+
+# Get status of the workspace
+status_response=$(curl -s -X GET \
+  -H "Authorization: Bearer $FABRIC_TOKEN" \
+  https://api.fabric.microsoft.com/v1/workspaces/$WORKSPACE_ID/git/status)
+
+# Extract parameters using Bash string manipulation
+workspaceHead=$(echo "$status_response" | grep -o '"workspaceHead":"[^"]*' | sed 's/"workspaceHead":"//')
+remoteCommitHash=$(echo "$status_response" | grep -o '"remoteCommitHash":"[^"]*' | sed 's/"remoteCommitHash":"//')
+
+# Update the workspace from git
+update_response=$(curl -X POST \
+  -H "Authorization: Bearer $FABRIC_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"remoteCommitHash": "'"$remoteCommitHash"'", "workspaceHead": "'"$workspaceHead"'"}' \
+  https://api.fabric.microsoft.com/v1/workspaces/$WORKSPACE_ID/git/updateFromGit)
+
+# Output the response of the second request
+echo "$update_response"
