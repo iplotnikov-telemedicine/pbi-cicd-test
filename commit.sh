@@ -71,5 +71,5 @@ update_response=$(curl -X POST \
 if [ "$update_response" = "null" ]; then
   echo "Success"
 else
-  echo "Failed"
+  echo "$update_response"
 fi
