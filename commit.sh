@@ -29,21 +29,23 @@ git commit -m "Sync from GitHub to Azure DevOps"
 git push --force $AZREPO
 
 
-token_response=$(curl --location 'https://login.windows.net/common/oauth2/token' \
-    --header 'Content-Type: application/x-www-form-urlencoded' \
-    --data-urlencode 'client_id=$CLIENT_ID' \
-    --data-urlencode 'grant_type=password' \
-    --data-urlencode 'resource=https://analysis.windows.net/powerbi/api' \
-    --data-urlencode 'username=$AZUSER_EMAIL' \
-    --data-urlencode 'password=$AZUSERPASSWORD' \
-    --data-urlencode 'tenant_id=$TENANT_ID')
+# Get access token
+token_response=$(curl --location "https://login.windows.net/common/oauth2/token" \
+    --header "Content-Type: application/x-www-form-urlencoded" \
+    --header "Cookie: fpc=AqaCGRSl6mZAgM-xxtlFBrbzHxbfAQAAADqaet0OAAAAYDQJkgEAAABEmnrdDgAAAA; stsservicecookie=estsfd; x-ms-gateway-slice=estsfd" \
+    --data-urlencode "client_id=$CLIENT_ID" \
+    --data-urlencode "grant_type=password" \
+    --data-urlencode "resource=https://analysis.windows.net/powerbi/api" \
+    --data-urlencode "username=$AZUSER_EMAIL" \
+    --data-urlencode "password=$AZUSERPASSWORD" \
+    --data-urlencode "tenant_id=$TENANT_ID")
 
-access_token=$(echo "$response" | grep -o '"access_token":"[^"]*' | awk -F'"' '{print $4}')
+access_token=$(echo "$token_response" | grep -o '"access_token":"[^"]*' | awk -F'"' '{print $4}')
 
 # Get status of the workspace
 status_response=$(curl -s -X GET \
   -H "Authorization: Bearer $access_token" \
-  https://api.fabric.microsoft.com/v1/workspaces/$WORKSPACE_ID/git/status)
+  https://api.fabric.microsoft.com/v1/workspaces/99693b73-c010-4b60-b5bf-11c970b05b09/git/status)
 
 # Extract parameters using Bash string manipulation
 workspaceHead=$(echo "$status_response" | grep -o '"workspaceHead":"[^"]*' | sed 's/"workspaceHead":"//')
@@ -54,7 +56,8 @@ update_response=$(curl -X POST \
   -H "Authorization: Bearer $access_token" \
   -H "Content-Type: application/json" \
   -d '{"remoteCommitHash": "'"$remoteCommitHash"'", "workspaceHead": "'"$workspaceHead"'"}' \
-  https://api.fabric.microsoft.com/v1/workspaces/$WORKSPACE_ID/git/updateFromGit)
+  https://api.fabric.microsoft.com/v1/workspaces/99693b73-c010-4b60-b5bf-11c970b05b09/git/updateFromGit)
 
-# Output the response of the second request
-echo "$update_response"
+if [ "$update_response" = "null" ]; then
+  echo "Success"
+fi
