@@ -1,3 +1,17 @@
+#!/bin/bash
+
+AZORG=$AZORG
+AZPROJECT=$AZPROJECT
+AZUREPAT=$AZUREPAT
+AZUSERNAME=$AZUSERNAME
+AZUSERPASSWORD=$AZUSERPASSWORD
+AZUSER_EMAIL=$AZUSER_EMAIL
+CLIENT_ID=$CLIENT_ID
+TENANT_ID=$TENANT_ID
+WORKSPACE_ID=$WORKSPACE_ID
+AZREPO="https://$AZUSERNAME:$AZUREPAT@dev.azure.com/$AZORG/$AZPROJECT/_git/pbi-cicd-test"
+
+
 # Get access token
 token_response=$(curl --location "https://login.windows.net/common/oauth2/token" \
     --header "Content-Type: application/x-www-form-urlencoded" \
@@ -47,7 +61,7 @@ update_response=$(curl -X POST \
   https://api.fabric.microsoft.com/v1/workspaces/$WORKSPACE_ID/git/updateFromGit)
 
 if [ "$update_response" = "null" ]; then
-  echo "Success"
+  exit 0;
 else
-  echo "$update_response"
+  exit 1;
 fi

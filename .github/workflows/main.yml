@@ -1,11 +1,11 @@
-name: Push github directory to another azure devops repository
+name: Sync github repo with azure repo and update PBI workspace
 on:
   push:
     branches:
       - '*' # applies for all branches in github.
       - '!master' # This line is used to restrict this pipeline which won't triggers for master branch
 jobs:
-  check-bats-version:
+  sync-and-update:
     runs-on: ubuntu-latest
     environment: develop # mention that environment name that what we have created in step 1.
     steps:
