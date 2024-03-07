@@ -1,18 +1,5 @@
 #!/bin/bash
 
-AZUSERPASSWORD=$AZUSERPASSWORD
-AZUSER_EMAIL=$AZUSER_EMAIL
-CLIENT_ID=$CLIENT_ID
-TENANT_ID=$TENANT_ID
-WORKSPACE_ID=$WORKSPACE_ID
-
-
-echo "AZUSERPASSWORD is $AZUSERPASSWORD"
-echo "AZUSER_EMAIL is $AZUSER_EMAIL"
-echo "CLIENT_ID is $CLIENT_ID"
-echo "TENANT_ID is $TENANT_ID"
-echo "WORKSPACE_ID is $WORKSPACE_ID"
-
 # Get access token
 token_response=$(curl --location "https://login.windows.net/common/oauth2/token" \
     --header "Content-Type: application/x-www-form-urlencoded" \
