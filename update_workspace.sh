@@ -48,5 +48,6 @@ update_response=$(curl -X POST \
 if [ "$update_response" = "null" ]; then
   exit 0;
 else
+  echo "$update_response";
   exit 1;
 fi
