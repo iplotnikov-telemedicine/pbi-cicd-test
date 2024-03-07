@@ -1,16 +1,17 @@
 #!/bin/bash
 
-AZORG=$AZORG
-AZPROJECT=$AZPROJECT
-AZUREPAT=$AZUREPAT
-AZUSERNAME=$AZUSERNAME
 AZUSERPASSWORD=$AZUSERPASSWORD
 AZUSER_EMAIL=$AZUSER_EMAIL
 CLIENT_ID=$CLIENT_ID
 TENANT_ID=$TENANT_ID
 WORKSPACE_ID=$WORKSPACE_ID
-AZREPO="https://$AZUSERNAME:$AZUREPAT@dev.azure.com/$AZORG/$AZPROJECT/_git/pbi-cicd-test"
 
+
+echo "AZUSERPASSWORD is $AZUSERPASSWORD"
+echo "AZUSER_EMAIL is $AZUSER_EMAIL"
+echo "CLIENT_ID is $CLIENT_ID"
+echo "TENANT_ID is $TENANT_ID"
+echo "WORKSPACE_ID is $WORKSPACE_ID"
 
 # Get access token
 token_response=$(curl --location "https://login.windows.net/common/oauth2/token" \
@@ -19,7 +20,7 @@ token_response=$(curl --location "https://login.windows.net/common/oauth2/token"
     --data-urlencode "client_id=$CLIENT_ID" \
     --data-urlencode "grant_type=password" \
     --data-urlencode "resource=https://analysis.windows.net/powerbi/api" \
-    --data-urlencode "username=igor.plotnikov@credentially.io" \
+    --data-urlencode "username=$AZUSER_EMAIL" \
     --data-urlencode "password=$AZUSERPASSWORD" \
     --data-urlencode "tenant_id=$TENANT_ID")
 
@@ -35,12 +36,9 @@ workspaceHead=$(echo "$status_response" | grep -o '"workspaceHead":"[^"]*' | sed
 remoteCommitHash=$(echo "$status_response" | grep -o '"remoteCommitHash":"[^"]*' | sed 's/"remoteCommitHash":"//')
 
 
-echo "$CLIENT_ID"
-echo "$AZUSER_EMAIL"
-echo "$TENANT_ID"
-echo "<$workspaceHead>"
-echo "<$remoteCommitHash>"
-echo "<$access_token>"
+echo "<workspaceHead is $workspaceHead>"
+echo "<remoteCommitHash is $remoteCommitHash>"
+echo "<access_token is $access_token>"
 
 
 # Update the workspace from git

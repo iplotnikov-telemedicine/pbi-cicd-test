@@ -14,13 +14,9 @@ jobs:
       env:
         AZUREPAT: ${{secrets.AZUREPAT}}
         AZUSERNAME: ${{secrets.AZUSERNAME}}
-        AZUSERPASSWORD: ${{secrets.AZUSERPASSWORD}}
         AZUSER_EMAIL: ${{secrets.AZUSER_EMAIL}}
         AZORG: ${{secrets.AZORG}}
         AZPROJECT: ${{secrets.AZPROJECT}}
-        WORKSPACE_ID: ${{secrets.WORKSPACE_ID}}
-        CLIENT_ID: ${{secrets.CLIENT_ID}}
-        TENANT_ID: ${{secrets.TENANT_ID}}
       run: |
          chmod +x ./sync_repo.sh
          ./sync_repo.sh
