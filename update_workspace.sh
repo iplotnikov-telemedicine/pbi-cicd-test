@@ -4,12 +4,12 @@
 token_response=$(curl --location "https://login.windows.net/common/oauth2/token" \
     --header "Content-Type: application/x-www-form-urlencoded" \
     --header "Cookie: fpc=AqaCGRSl6mZAgM-xxtlFBrbzHxbfAQAAADqaet0OAAAAYDQJkgEAAABEmnrdDgAAAA; stsservicecookie=estsfd; x-ms-gateway-slice=estsfd" \
-    --data-urlencode "client_id=$CLIENT_ID" \
-    --data-urlencode "grant_type=password" \
-    --data-urlencode "resource=https://analysis.windows.net/powerbi/api" \
-    --data-urlencode "username=$AZUSER_EMAIL" \
-    --data-urlencode "password=$AZUSERPASSWORD" \
-    --data-urlencode "tenant_id=$TENANT_ID")
+    --data-urlencode 'client_id='"$CLIENT_ID"'' \
+    --data-urlencode 'grant_type=password' \
+    --data-urlencode 'resource=https://analysis.windows.net/powerbi/api' \
+    --data-urlencode 'username='"$AZUSER_EMAIL"'' \
+    --data-urlencode 'password='"$AZUSERPASSWORD"'' \
+    --data-urlencode 'tenant_id='"$TENANT_ID"'')
 
 access_token=$(echo "$token_response" | grep -o '"access_token":"[^"]*' | awk -F'"' '{print $4}')
 
