@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get access token
-token_response=$(curl --location "https://login.windows.net/common/oauth2/token" \
+token_response=$(curl --location 'https://login.windows.net/common/oauth2/token' \
     --header 'Content-Type: application/x-www-form-urlencoded' \
     --header 'Cookie: fpc=AqaCGRSl6mZAgM-xxtlFBrbzHxbfAQAAADqaet0OAAAAYDQJkgEAAABEmnrdDgAAAA; stsservicecookie=estsfd; x-ms-gateway-slice=estsfd' \
     --data-urlencode 'client_id='"$CLIENT_ID"'' \
