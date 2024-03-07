@@ -10,9 +10,9 @@ jobs:
     environment: develop # mention that environment name that what we have created in step 1.
     steps:
     - uses: actions/checkout@v2
-    - name: Run script file
+    - name: Sync repo
       env:
-        AZUREPAT: ${{secrets.AZUREPAT}} # calling secrets from environment variables
+        AZUREPAT: ${{secrets.AZUREPAT}}
         AZUSERNAME: ${{secrets.AZUSERNAME}}
         AZUSERPASSWORD: ${{secrets.AZUSERPASSWORD}}
         AZUSER_EMAIL: ${{secrets.AZUSER_EMAIL}}
@@ -22,7 +22,20 @@ jobs:
         CLIENT_ID: ${{secrets.CLIENT_ID}}
         TENANT_ID: ${{secrets.TENANT_ID}}
       run: |
-         chmod +x ./commit.sh
-         ./commit.sh # it will calls 'commit.sh' file. Thats where our logic is in.
+         chmod +x ./sync_repo.sh
+      shell: bash
+    - name: Update workspace
+      env:
+        AZUREPAT: ${{secrets.AZUREPAT}}
+        AZUSERNAME: ${{secrets.AZUSERNAME}}
+        AZUSERPASSWORD: ${{secrets.AZUSERPASSWORD}}
+        AZUSER_EMAIL: ${{secrets.AZUSER_EMAIL}}
+        AZORG: ${{secrets.AZORG}}
+        AZPROJECT: ${{secrets.AZPROJECT}}
+        WORKSPACE_ID: ${{secrets.WORKSPACE_ID}}
+        CLIENT_ID: ${{secrets.CLIENT_ID}}
+        TENANT_ID: ${{secrets.TENANT_ID}}
+      run: |
+         chmod +x ./update_workspace.sh
       shell: bash
   
