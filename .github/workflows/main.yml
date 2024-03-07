@@ -24,11 +24,10 @@ jobs:
       shell: bash
     - name: Update workspace
       env:
-        AZUSERPASSWORD: ${{ secrets.AZUSERPASSWORD }}
-        AZUSER_EMAIL: ${{ secrets.AZUSER_EMAIL }}
-        WORKSPACE_ID: ${{ secrets.WORKSPACE_ID }}
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         TENANT_ID: ${{ secrets.TENANT_ID }}
+        WORKSPACE_ID: ${{ secrets.WORKSPACE_ID }}
       run: |
          chmod +x ./update_workspace.sh
          ./update_workspace.sh
