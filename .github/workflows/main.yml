@@ -23,6 +23,7 @@ jobs:
         TENANT_ID: ${{secrets.TENANT_ID}}
       run: |
          chmod +x ./sync_repo.sh
+         ./sync_repo.sh
       shell: bash
     - name: Update workspace
       env:
@@ -37,5 +38,6 @@ jobs:
         TENANT_ID: ${{secrets.TENANT_ID}}
       run: |
          chmod +x ./update_workspace.sh
+         ./update_workspace.sh
       shell: bash
   
