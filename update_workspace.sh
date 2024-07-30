@@ -4,8 +4,8 @@
 token_response=$(curl --location 'https://login.microsoftonline.com/'"$TENANT_ID"'/oauth2/v2.0/token' \
     --header 'Content-Type: application/x-www-form-urlencoded' \
     --data-urlencode 'client_id='"$CLIENT_ID"'' \
-    --data-urlencode 'scope=https://api.fabric.microsoft.com/.default' \
     --data-urlencode 'client_secret='"$CLIENT_SECRET"'' \
+    --data-urlencode 'scope=https://analysis.windows.net/powerbi/api/.default' \
     --data-urlencode 'grant_type=client_credentials')
 
 access_token=$(echo "$token_response" | grep -o '"access_token":"[^"]*' | awk -F'"' '{print $4}')
